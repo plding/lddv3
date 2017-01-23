@@ -1,7 +1,7 @@
 KERNELDIR ?= /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
 
-obj-m += hello.o
+obj-m := hello.o hellop.o
 
 modules:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
