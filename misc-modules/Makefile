@@ -1,10 +1,16 @@
+
 KERNELDIR ?= /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
 
-obj-m := hello.o hellop.o
+obj-m := hello.o
 
 modules:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
 
+modules_install:
+	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules_install
+
 clean:
-	$(MAKE) -C $(KERNELDIR) M=$(PWD) clean
+	rm -rf *.o *~ core .depend .*.cmd *.ko *.mod.c .tmp_versions modules.order Module.symvers
+
+.PHONY: moduels modules_install clean

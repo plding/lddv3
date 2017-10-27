@@ -1,6 +1,9 @@
-SUBDIRS = misc-modules scull
 
-all:
+SUBDIRS = misc-modules
+
+all: subdirs
+
+subdirs:
 	for n in $(SUBDIRS); do $(MAKE) -C $$n || exit 1; done
 
 clean:
