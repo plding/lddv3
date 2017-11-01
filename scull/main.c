@@ -1,7 +1,7 @@
 /*
  * main.c -- the bare scull char module
  *
- * Copyright (C) Ding Peilong <77676182@qq.com>
+ * Copyright (C) 2017 Ding Peilong
  */
 
 #include <linux/module.h>
@@ -10,9 +10,11 @@
 #include <linux/kernel.h>   /* printk() */
 #include <linux/slab.h>     /* kmalloc() */
 #include <linux/fs.h>       /* everything... */
+#include <linux/errno.h>    /* error codes */
+#include <linux/types.h>    /* size_t */
 #include <linux/cdev.h>
 
-#include "scull.h"  /* local definitions */
+#include "scull.h"      /* local definitions */
 
 /*
  * Our parameters which can be set at load time.
@@ -56,6 +58,7 @@ void scull_cleanup_module(void)
     /* cleanup_module is never called if registering failed */
     unregister_chrdev_region(devno, scull_nr_devs);
 }
+
 
 /*
  * Set up the char_dev structure for this device.
@@ -114,12 +117,13 @@ int scull_init_module(void)
         scull_setup_cdev(&scull_devices[i], i);
     }
 
-    return 0;
+    return 0;   /* succeed */
 
 fail:
     scull_cleanup_module();
     return result;
 }
+
 
 module_init(scull_init_module);
 module_exit(scull_cleanup_module);
